@@ -52,7 +52,7 @@ def test_sudoku_solver():
     assert (is_valid(puzzle4) == False)
 
 
-    assert ((init_board(puzzle1) == np.array([[1, 7, 4, 3, 8, 2, 9, 5, 6],
+    assert ((init_board(puzzle1)[0] == np.array([[1, 7, 4, 3, 8, 2, 9, 5, 6],
                                             [2, 9, 5, 4, 6, 7, 1, 3, 8],
                                             [3, 8, 6, 9, 5, 1, 4, 7, 2],
                                             [4, 6, 1, 5, 2, 3, 8, 9, 7],
@@ -66,11 +66,11 @@ def test_sudoku_solver():
 
 def test_sudoku_puzzle_files():
     # difficulties = ['very_easy', 'easy', 'medium', 'hard']
-    difficulties = ['very_easy', 'easy', 'medium']
+    difficulties = ['very_easy', 'easy', 'medium', 'hard']
     for level in difficulties:
         print(level)
         sudokus = np.load(f"data/{level}_puzzle.npy")
         solutions = np.load(f"data/{level}_solution.npy")
         for puzzle, solution in zip(sudokus, solutions):
-            assert (sudoku_solver(puzzle) == solution).all()
+            assert (np.array_equal(sudoku_solver(puzzle), solution))
 
